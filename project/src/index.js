@@ -20,11 +20,12 @@ function counter(state = 0, action) {
 const store = createStore(counter);
 
 store.subscribe(() => {
-    console.log('subscribe', store.getState());
 })
 
 store.dispatch({ type: 'INCREMENT', state: "+1" });
 
-console.log(store.getState());
-
-ReactDOM.render( < App / > , document.getElementById('root'));
+ReactDOM.render( 
+  <Provider store={store}>
+    <App />
+  </Provider>,
+   document.getElementById('root'));

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class Increment extends Component {
   render () {
     return (
-      <button>Жми сука</button>
+      <button>+ 1</button>
     )
   }
 }
