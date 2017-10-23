@@ -22,8 +22,6 @@ const store = createStore(counter);
 store.subscribe(() => {
 })
 
-store.dispatch({ type: 'INCREMENT', state: "+1" });
-
 ReactDOM.render( 
   <Provider store={store}>
     <App />

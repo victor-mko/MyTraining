@@ -8,6 +8,7 @@ class App extends Component {
     this.addOne = this.addOne.bind(this);
     this.removeOne = this.removeOne.bind(this);
   }
+  
   addOne(){
     this.props.onAddOne();
   }
