@@ -1,26 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import App from './App';
+import reducer from './reducers'; 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
-function counter(state = 0, action) {
-    console.log(action);
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + 1
-        case 'DECREMENT':
-            return state - 1
-        default:
-            return state
-    }
-}
 
-const store = createStore(counter);
-
-store.subscribe(() => {
-})
+const store = createStore(
+    reducer, 
+    composeWithDevTools(applyMiddleware(thunk))
+);
 
 ReactDOM.render( 
   <Provider store={store}>

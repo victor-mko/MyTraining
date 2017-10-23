@@ -1,43 +1,80 @@
 import React, {Component} from 'react';
-import Increment from './Incriment';
 import { connect } from "react-redux";
 
 class App extends Component {
   constructor(props){
     super(props);
-    this.addOne = this.addOne.bind(this);
-    this.removeOne = this.removeOne.bind(this);
+    this.state = {
+      inputAddValue: '',
+      inputFindValue: ''
+    }
   }
-  
-  addOne(){
-    this.props.onAddOne();
+  changeAddValue = (event) =>
+    this.setState({ inputAddValue: event.target.value });
+
+  changeFindValue = (event) =>
+    this.setState({ inputFindValue: event.target.value });
+
+  addTrack = () => {
+    this.props.onAddTrack(this.state.inputAddValue);
+    this.setState({ inputAddValue: "" });
   }
-  removeOne(){
-    this.props.onRemoveOne();
+
+  findTrack= () => {
+    this.props.onFindTrack(this.state.inputFindValue);
+    this.setState({ inputFindValue: "" });
   }
+
   render () {
     return (
       <div> 
-        <button onClick={this.addOne}>+1</button>
-        <div>{this.props.testStore}</div>
-        <button onClick={this.removeOne}>-1</button>
+        <div>
+          <input type="text" value={this.state.inputAddValue} onChange={this.changeAddValue}/>
+          <button onClick={this.addTrack}>Add Track</button>
+        </div>
+        <br/>
+        <br/>
+        <div>
+          <input type="text" value={this.state.inputFindValue} onChange={this.changeFindValue}/>
+          <button onClick={this.findTrack}>Find Track</button>
+        </div>
+        <br/>
+        <br/>
+        <div>
+          <button onClick={this.props.onGetTracks}>Get tracks</button>
+        </div>
+
+        <ul>
+          {this.props.tracks.map((track, index) =>
+            <li key={index}>{track.name}</li>)}
+        </ul>
+        
       </div>
     )
   }
 }
 
-
-
 export default connect(
   state => ({
-    testStore: state
+    tracks: state.tracks.filter(track => track.name.includes(state.filterTracks))
   }),
   dispatch => ({
-    onAddOne: () => {
-      dispatch({ type: 'INCREMENT'})
+    onAddTrack: (name) => {
+      const payLoad = {
+        id: Date.now().toString(),
+        name
+      }
+      dispatch({ 
+        type: 'ADD_TRACK', 
+        payLoad
+        })
     },
-    onRemoveOne: () => {
-      dispatch({ type: 'DECREMENT'})
+    onFindTrack: (name) => {
+
+      dispatch({ 
+        type: 'FIND_TRACK',
+        payLoad: name
+      })
     }
   })
 )(App);
