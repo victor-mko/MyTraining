@@ -8,8 +8,8 @@ export default function playList(state = initialSate, action) {
             ...state,
             action.payLoad
         ]
-    } else if (action.type === 'DELETE_TRACK') {
-        return state;
+    } else if (action.type === 'FETCH_TRACKS_SUCCESS') {
+        return action.payLoad;
     }
     return state
 }
