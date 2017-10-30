@@ -9,26 +9,29 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import {
-  BrowserRouter,
-  Router,
+  BrowserRouter as Router,
   Route,
   Link,
   Switch
-} from 'react-router-dom'
+} from 'react-router-dom';
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
 
+const history = createHistory();
+const middleware = routerMiddleware(history)
 const store = createStore(
     reducer, 
-    composeWithDevTools(applyMiddleware(thunk))
+    composeWithDevTools(applyMiddleware(thunk, routerMiddleware(history)))
 );
 
 ReactDOM.render( 
   <Provider store={store}>
-    <Router>
+    <ConnectedRouter history={history}>
       <Switch>
-        <Route path='/' component={App}/>
+        <Route exact path='/' component={App}/>
         <Route path='/about' component={About}/>
       </Switch>
-    </Router>
+    </ConnectedRouter>
   </Provider>,
    document.getElementById('root'));  

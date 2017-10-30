@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 import { getTracks } from './actions/tracks';
+import Menu from "./Menu";
 
 class App extends Component {
   constructor(props){
@@ -29,6 +30,8 @@ class App extends Component {
   render () {
     return (
       <div> 
+        <Menu />
+        <br/>
         <div>
           <input type="text" value={this.state.inputAddValue} onChange={this.changeAddValue}/>
           <button onClick={this.addTrack}>Add Track</button>
